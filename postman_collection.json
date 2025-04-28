@@ -1,0 +1,327 @@
+{
+  "info": {
+    "name": "Contest Participation System API",
+    "description": "API documentation for the Contest Participation System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"John Doe\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contests",
+      "item": [
+        {
+          "name": "Create Contest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Math Contest\",\n  \"description\": \"Test your math skills\",\n  \"startTime\": \"2024-03-01T10:00:00Z\",\n  \"endTime\": \"2024-03-01T12:00:00Z\",\n  \"accessLevel\": \"normal\",\n  \"questions\": [\n    {\n      \"type\": \"single_select\",\n      \"text\": \"What is 2 + 2?\",\n      \"options\": [\"3\", \"4\", \"5\", \"6\"],\n      \"correctAnswers\": [\"4\"],\n      \"points\": 10\n    }\n  ],\n  \"prize\": {\n    \"description\": \"First Place Trophy\",\n    \"value\": 100\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/contests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "contests"]
+            }
+          }
+        },
+        {
+          "name": "Get All Contests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/contests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "contests"]
+            }
+          }
+        },
+        {
+          "name": "Get Contest by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/contests/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "contests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "contest_id"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Submit Contest Answers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\n      \"questionId\": \"question_id\",\n      \"selectedAnswers\": [\"4\"]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/contests/:id/submit",
+              "host": ["{{base_url}}"],
+              "path": ["api", "contests", ":id", "submit"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "contest_id"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leaderboard",
+      "item": [
+        {
+          "name": "Get Global Leaderboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/leaderboard/global",
+              "host": ["{{base_url}}"],
+              "path": ["api", "leaderboard", "global"]
+            }
+          }
+        },
+        {
+          "name": "Get Contest Leaderboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/leaderboard/contest/:contestId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "leaderboard", "contest", ":contestId"],
+              "variable": [
+                {
+                  "key": "contestId",
+                  "value": "contest_id"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Name\",\n  \"email\": \"newemail@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get User's Contest History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/contests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "contests"]
+            }
+          }
+        },
+        {
+          "name": "Get User's In-Progress Contests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/contests/in-progress",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "contests", "in-progress"]
+            }
+          }
+        },
+        {
+          "name": "Get User's Won Prizes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/prizes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "prizes"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token"
+    }
+  ]
+} 
