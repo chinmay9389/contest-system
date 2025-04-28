@@ -21,8 +21,8 @@ A robust contest participation system built with Express.js, Node.js, and TypeSc
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd contest-participation-system
+git clone https://github.com/chinmay9389/contest-system.git
+cd contest-system
 ```
 
 2. Install dependencies:
@@ -30,7 +30,7 @@ cd contest-participation-system
 npm install
 ```
 
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file in the root directory with the following variables (Refer .env.example):
 ```
 PORT=3000
 MONGODB_URI=mongodb://localhost:27017/contest-system
@@ -178,13 +178,6 @@ The API uses standard HTTP status codes and returns error messages in the follow
 }
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
