@@ -14,12 +14,31 @@ import leaderboardRoutes from './routes/leaderboard.routes';
 // Load environment variables
 dotenv.config();
 
+// Verify environment variables
+console.log('Environment variables loaded:', {
+  NODE_ENV: process.env.NODE_ENV,
+  JWT_SECRET: process.env.JWT_SECRET ? 'Set' : 'Not Set',
+  MONGODB_URI: process.env.MONGODB_URI ? 'Set' : 'Not Set'
+});
+
 const app = express();
+
+// CORS configuration
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:3003'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400, // 24 hours
+};
 
 // Middleware
 app.use(express.json());
-app.use(cors());
-app.use(helmet());
+app.use(cors(corsOptions));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: { policy: "unsafe-none" },
+}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -44,7 +63,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/contest-system')
   .then(() => {
     console.log('Connected to MongoDB');
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3003;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
